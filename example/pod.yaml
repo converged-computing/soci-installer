@@ -1,0 +1,22 @@
+# https://github.com/awslabs/soci-snapshotter/blob/main/docs/eks.md#step-2-create-a-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soci-sample-deployment
+  labels:
+    app: soci
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soci
+  template:
+    metadata:
+      labels:
+        app: soci
+    spec:
+      containers:
+      - name: soci-container
+        image: public.ecr.aws/soci-workshop-examples/tensorflow_gpu:latest
+        command: ["sleep"]
+        args: ["inf"]

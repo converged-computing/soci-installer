@@ -1,0 +1,8 @@
+[cri_keychain]
+# metrics address for prometheus (or you!)
+metrics_address="localhost:8000"
+# This tells the soci-snapshotter to act as a proxy ImageService
+# and to cache credentials from requests to pull images.
+enable_keychain = true
+# This tells the soci-snapshotter where containerd's ImageService is located.
+image_service_path = "/run/containerd/containerd.sock"

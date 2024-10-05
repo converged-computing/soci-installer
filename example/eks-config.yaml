@@ -1,0 +1,22 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: soci-installer-example
+  region: us-east-2
+  version: "1.27"
+
+availabilityZones: ["us-east-2b", "us-east-2c"]
+managedNodeGroups:
+  - name: workers
+    availabilityZones: ["us-east-2b"]
+    instanceType: m5.4xlarge
+    # Defaults to 80, this in GB. We increased this to give more container pulls
+    volumeSize: 150
+    volumeType: gp2
+    # AWS keeps the control plane separate and private
+    minSize: 1
+    maxSize: 1
+    ssh:
+      allow: true
+      publicKeyPath: ~/.ssh/id_eks.pub

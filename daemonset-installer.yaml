@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: &name install-soci
+  labels:
+    app: *name
+spec:
+  selector:
+    matchLabels:
+      app: *name
+  template:
+    metadata:
+      labels:
+        app: *name
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node.kubernetes.io/instance-type
+                operator: In
+                # This is here as an example - you can likely install
+                # to any instance type.
+                values:
+                - m5.4xlarge
+
+      hostNetwork: true
+      hostPID: true
+      containers:
+      - image: ghcr.io/converged-computing/soci-installer:latest
+        imagePullPolicy: Always
+        name: *name
+        # nsenter enters the process of the running host (vs. container)
+        # You can sleep infinity and nsenter with bash to test or debug
+        # command: ["sleep", "infinity"]
+        command: ["/bin/bash"]
+        
+        # This takes the soci version on GitHub, the release tag (no "v")
+        args: ["/soci-install/entrypoint.sh", "0.7.0"] 
+        resources:
+          requests:
+            {}
+          limits:
+            {}
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: hostpath
+          mountPath: /mnt/install
+      volumes:
+      - name: hostpath
+        hostPath:
+          path: /mnt/install
+          type: DirectoryOrCreate
