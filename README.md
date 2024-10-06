@@ -1,5 +1,7 @@
 # SOCI Installer
 
+[![DOI](https://zenodo.org/badge/867900817.svg)](https://doi.org/10.5281/zenodo.13895822)
+
 The SOCI "Seekable OCI" Snapshotter is provided via [awslabs/soci-snapshotter](https://github.com/awslabs/soci-snapshotter) and is a containerd plugin that allows you to pull your containers (in layman's terms) "wicked fast." You can read more about the design and work done e.g.,:
 
 > [Harter et al FAST '16](https://www.usenix.org/conference/fast16/technical-sessions/presentation/harter) found that image download accounts for 76% of container startup time, but on average only 6.4% of the fetched data is actually needed for the container to start doing useful work.
